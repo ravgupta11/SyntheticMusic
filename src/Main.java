@@ -60,10 +60,14 @@ public class Main {
     }
 
     public static void randomMusic(Wave myWave) {
-        System.out.println("Select one of the scales:");
-        for (int rep = 0; rep < SCALES_NAMES.size(); ++rep)
-            System.out.println(rep + ": " + SCALES_NAMES.get(rep));
-        int option = sc.nextInt();
+        int option;
+        do {
+            System.out.println("Select one of the scales:");
+            for (int rep = 0; rep < SCALES_NAMES.size(); ++rep)
+                System.out.println(rep + ": " + SCALES_NAMES.get(rep));
+            option = sc.nextInt();
+        }
+        while (option >= SCALES_NAMES.size());
         ArrayList<Integer> myScale = SCALES.get(option);
         for (int i = 0; i < 50; ++i) {
             int sIndex = MyUtil.random(0, myScale.size() - 1);
@@ -192,6 +196,26 @@ public class Main {
         playTrack(myWave);
     }
 
+    public static void fibonacci(Wave myWave) {
+        int option;
+        do {
+            System.out.println("Select one of the scales:");
+            for (int rep = 0; rep < SCALES_NAMES.size(); ++rep)
+                System.out.println(rep + ": " + SCALES_NAMES.get(rep));
+            option = sc.nextInt();
+        }
+        while (option >= SCALES_NAMES.size());
+        ArrayList<Integer> myScale = SCALES.get(option);
+        int mod = myScale.size();
+        int fi = 0, se = 1;
+        for (int rep = 0; rep < 50; ++rep) {
+            int index = (fi + se) % mod;
+            myWave.addNote(new Note(myScale.get(index), MyUtil.random(0, 2)));
+            fi = se;
+            se = index;
+        }
+    }
+
     public static void main(String[] args) {
         Main obj = new Main();
         obj.mainMenu(obj);
@@ -203,7 +227,8 @@ public class Main {
         System.out.println("Select one of the following options: ");
         System.out.println("1. Create music using Dice Music Algorithm");
         System.out.println("2. Play some pre-defined Music");
-        System.out.println("3. Exit");
+        System.out.println("3. Play some fibonacci Music");
+        System.out.println("4. Exit");
         int option = sc.nextInt();
         switch (option) {
             case 1:
@@ -215,6 +240,10 @@ public class Main {
                 obj.mainMenu(obj);
                 return;
             case 3:
+                fibonacci(new Wave());
+                obj.mainMenu(obj);
+                return;
+            case 4:
                 System.out.println("Bye...");
                 return;
             default:
