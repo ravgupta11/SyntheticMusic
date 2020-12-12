@@ -30,6 +30,10 @@ public class MyUtil {
 
     public static ArrayList<Float> generateRelease(int length) {
         ArrayList<Float> release = generateAttack(length);
+        int i = 0;
+        for (; i < 4 * length / 5; ++i) release.set(i, Math.min(0.85f, release.get(i)));
+        float val = 0.0f;
+        for (; i < length; ++i, val += 0.001f) release.set(i, Math.min(0.85f + val, release.get(i)));
         Collections.reverse(release);
         return release;
     }

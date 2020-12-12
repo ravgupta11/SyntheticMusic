@@ -1,7 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class Note {
     Semitone mySemitone;
     Beat myBeat;
@@ -27,18 +23,7 @@ public class Note {
     }
 
     static class Semitone {
-        static {
-            try (BufferedReader myreader = new BufferedReader(new FileReader("SemitonesAndMidi.txt"))) {
-                String s;
-                while ((s = myreader.readLine()) != null) {
-                    String[] data = s.split(",");
-                    Main.SEMITONES.put(data[0], Integer.parseInt(data[1]));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Main.MIDIS.addAll(Main.SEMITONES.values());
-        }
+
 
         Frequency Hz;
 
@@ -69,11 +54,8 @@ public class Note {
 
     static class Beat {
         static {
+            //Main.BEATS.add(0.25f);
             Main.BEATS.add(0.25f);
-            Main.BEATS.add(0.5f);
-            Main.BEATS.add(0.5f);
-            Main.BEATS.add(0.5f);
-            Main.BEATS.add(0.5f);
             Main.BEATS.add(0.5f);
             Main.BEATS.add(1.0f);
         }

@@ -18,9 +18,7 @@ public class SoundPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(wavFile)));
             clip.start();
-        } catch (LineUnavailableException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
     }
