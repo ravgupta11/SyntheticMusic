@@ -24,7 +24,6 @@ public class Note {
 
     static class Semitone {
 
-
         Frequency Hz;
 
         Semitone(int i) {

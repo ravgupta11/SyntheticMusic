@@ -59,7 +59,7 @@ public class Main {
         }
     }
 
-    public static void randomMusic(Wave myWave) {
+    public static Wave randomMusic(Wave myWave) {
         int option;
         do {
             System.out.println("Select one of the scales:");
@@ -76,6 +76,7 @@ public class Main {
             myWave.addNote(new Note(st, bIndex));
         }
         playTrack(myWave);
+        return myWave;
     }
 
     public static void happyBirthday(Wave myWave) {
@@ -108,9 +109,10 @@ public class Main {
         myWave.play("A4", 1);
         myWave.play("G4", 2);
         playTrack(myWave);
+
     }
 
-    public static void jingleBells(Wave myWave) {
+    public static Wave jingleBells(Wave myWave) {
         myWave.play("D4", 2);
         myWave.play("B4", 1);
         myWave.play("B4", 1);
@@ -168,7 +170,9 @@ public class Main {
         myWave.play("A4", 1);
         myWave.play("G4", 1);
         myWave.rest();
+
         playTrack(myWave);
+        return myWave;
     }
 
     public static void sampleTune(Wave myWave) {
@@ -196,7 +200,19 @@ public class Main {
         playTrack(myWave);
     }
 
-    public static void fibonacci(Wave myWave) {
+    public static void generate(Wave myWave, int option, float beat, int tempo) {
+        ArrayList<Integer> myScale = SCALES.get(option);
+        int mod = myScale.size();
+        int fi = 0, se = 1;
+        for (int rep = 0; rep < 10; ++rep) {
+            int index = (fi + se) % mod;
+            myWave.addNote(new Note(myScale.get(index) - tempo, beat));
+            fi = se;
+            se = index;
+        }
+    }
+
+    public static void fibonacci(Wave w1) {
         int option;
         do {
             System.out.println("Select one of the scales:");
@@ -205,15 +221,28 @@ public class Main {
             option = sc.nextInt();
         }
         while (option >= SCALES_NAMES.size());
-        ArrayList<Integer> myScale = SCALES.get(option);
-        int mod = myScale.size();
-        int fi = 0, se = 1;
-        for (int rep = 0; rep < 50; ++rep) {
-            int index = (fi + se) % mod;
-            myWave.addNote(new Note(myScale.get(index), MyUtil.random(0, 2)));
-            fi = se;
-            se = index;
-        }
+
+        Wave w2 = new Wave(), w3 = new Wave(), w4 = new Wave(), w5 = new Wave(), w6 = new Wave(), w7 = new Wave(), w8 = new Wave(), w9 = new Wave(), w10 = new Wave();
+        generate(w3, option, 0.5f, 6);
+        generate(w4, option, 1.0f, 8);
+        generate(w5, option, 1.0f, 6);
+        generate(w6, option, 0.5f, 6);
+        generate(w7, option, 2.0f, 12);
+        generate(w8, option, 1.5f, 6);
+        generate(w9, option, 1.5f, 6);
+        w1.merge(w2);
+        w1.merge(w3);
+        w4.merge(w5);
+        w4.merge(w6);
+        w7.merge(w8);
+        w7.merge(w9);
+        w10.concat(w1);
+        w10.concat(w1);
+        w10.concat(w4);
+        w10.concat(w4);
+        w10.concat(w7);
+        w10.concat(w7);
+        playTrack(w10);
     }
 
     public static void main(String[] args) {
