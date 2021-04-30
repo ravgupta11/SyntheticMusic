@@ -1,2 +1,2 @@
 # SyntheticMusic
-Create random music using java
+Create fibonacci and random music using java
